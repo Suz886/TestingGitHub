@@ -2,32 +2,60 @@
 
 <h3>Home</h3>
 
-<p>Welcome to our website!</p>
+<p>Welcome!</p>
 
 <p>@message</p>
 
-<button class="btn btn-primary" @onclick="ShowMessage">Click Me</button>
+<button class="btn btn-primary me-2" @onclick="ShowMessage">Click Me</button>
+<button class="btn btn-secondary me-2" @onclick="IncrementCounter">Increase Counter</button>
+<button class="btn btn-outline-info" @onclick="ToggleDetails">Toggle Details</button>
 
 @if (!string.IsNullOrEmpty(clickedMessage))
 {
-    <p>@clickedMessage</p>
+    <p class="text-success fw-bold mt-2">@clickedMessage</p>
+}
+
+@if (showDetails)
+{
+    <div class="alert alert-info mt-3">
+        <p>The current time is: <strong>@DateTime.Now.ToLongTimeString()</strong></p>
+        <p>You’ve clicked the counter button <strong>@counter</strong> times.</p>
+    </div>
 }
 
 @code {
-    // A message displayed when the page loads
+    // Message displayed when the page loads
     private string message = "Hello from the Home page!";
 
-    // A message shown when the user clicks the button
+    // Message shown when the user clicks the 'Click Me' button
     private string? clickedMessage;
 
+    // Counter and toggle state
+    private int counter = 0;
+    private bool showDetails = false;
+
+    // Lifecycle method runs once when the component initializes
     protected override void OnInitialized()
     {
         Console.WriteLine("Home page initialized");
+        message = $"Hello from the Home page! The time is {DateTime.Now.ToShortTimeString()}";
     }
 
     private void ShowMessage()
     {
         clickedMessage = "You clicked the button!";
+        Console.WriteLine("Button clicked!");
+    }
+
+    private void IncrementCounter()
+    {
+        counter++;
+        Console.WriteLine($"Counter is now {counter}");
+    }
+
+    private void ToggleDetails()
+    {
+        showDetails = !showDetails;
+        Console.WriteLine($"ShowDetails: {showDetails}");
     }
 }
-
