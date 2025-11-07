@@ -12,10 +12,14 @@
 
 @if (showInfo)
 {
-    <div class="alert alert-warning mt-3">
-        <p><strong>⚠️ Extra Info Section — from second PC</strong></p>
-        <p>Counter value: <strong>@clicks</strong></p>
-        <p>Random number: <strong>@randomValue</strong></p>
+    <p class="text-success fw-bold mt-2">@clickedMessage</p>
+}
+
+@if (showDetails)
+{
+    <div class="alert alert-info mt-3">
+        <p>The current time is: <strong>@DateTime.Now.ToLongTimeString()</strong></p>
+        <p>You’ve clicked the counter button <strong>@counter</strong> times.</p>
     </div>
 }
 
@@ -46,7 +50,7 @@
 
     private void ToggleExtraInfo()
     {
-        showInfo = !showInfo;
-        Console.WriteLine($"ShowInfo toggled: {showInfo}");
+        showDetails = !showDetails;
+        Console.WriteLine($"ShowDetails: {showDetails}");
     }
 }
