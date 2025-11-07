@@ -2,15 +2,32 @@
 
 <h3>Home</h3>
 
-<p>Welcome </p>
+<p>Welcome to our website!</p>
+
+<p>@message</p>
+
+<button class="btn btn-primary" @onclick="ShowMessage">Click Me</button>
+
+@if (!string.IsNullOrEmpty(clickedMessage))
+{
+    <p>@clickedMessage</p>
+}
 
 @code {
-    // You can add C# code here
+    // A message displayed when the page loads
     private string message = "Hello from the Home page!";
+
+    // A message shown when the user clicks the button
+    private string? clickedMessage;
 
     protected override void OnInitialized()
     {
         Console.WriteLine("Home page initialized");
+    }
+
+    private void ShowMessage()
+    {
+        clickedMessage = "You clicked the button!";
     }
 }
 
