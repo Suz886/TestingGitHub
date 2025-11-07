@@ -1,62 +1,52 @@
 ﻿@page "/"
 
-<h3>Home</h3>
+<h1>🏠 Welcome Home (Second PC Version)</h1>
 
-<p>Welcome to the <strong>GitHub Merge Test Page</strong>!</p>
+<p>This version is intentionally different for merge conflict testing.</p>
 
-<p>@message</p>
+<p>@welcomeMessage</p>
 
-<button class="btn btn-primary me-2" @onclick="ShowMessage">Click Me</button>
-<button class="btn btn-secondary me-2" @onclick="IncrementCounter">Increase Counter</button>
-<button class="btn btn-outline-info" @onclick="ToggleDetails">Toggle Details</button>
+<button class="btn btn-danger me-2" @onclick="SayHello">Say Hello</button>
+<button class="btn btn-warning me-2" @onclick="DecreaseCounter">Decrease Counter</button>
+<button class="btn btn-dark" @onclick="ToggleExtraInfo">Show Extra Info</button>
 
-@if (!string.IsNullOrEmpty(clickedMessage))
+@if (showInfo)
 {
-    <p class="text-success fw-bold mt-2">@clickedMessage</p>
-}
-
-@if (showDetails)
-{
-    <div class="alert alert-info mt-3">
-        <p><strong>Details Section (GitHub test)</strong></p>
-        <p>The current time is: <strong>@DateTime.Now.ToLongTimeString()</strong></p>
-        <p>You’ve clicked the counter button <strong>@counter</strong> times.</p>
+    <div class="alert alert-warning mt-3">
+        <p><strong>⚠️ Extra Info Section — from second PC</strong></p>
+        <p>Counter value: <strong>@clicks</strong></p>
+        <p>Random number: <strong>@randomValue</strong></p>
     </div>
 }
 
 @code {
-    // Message displayed when the page loads
-    private string message = "Hello from the Home page — merge test version!";
+    // Completely different variable names and logic
+    private string welcomeMessage = "Greetings from the second computer version!";
+    private int clicks = 10;
+    private bool showInfo = true;
+    private double randomValue = 0;
 
-    // Message shown when the user clicks the 'Click Me' button
-    private string? clickedMessage;
-
-    // Counter and toggle state
-    private int counter = 0;
-    private bool showDetails = false;
-
-    // Lifecycle method runs once when the component initializes
     protected override void OnInitialized()
     {
-        Console.WriteLine("Home page initialized for GitHub merge testing");
-        message = $"Home page loaded at {DateTime.Now.ToShortTimeString()}";
+        Console.WriteLine("Second PC version initialized!");
+        randomValue = new Random().NextDouble() * 100;
     }
 
-    private void ShowMessage()
+    private void SayHello()
     {
-        clickedMessage = "You clicked the button during a merge test!";
-        Console.WriteLine("Button clicked — merge test");
+        welcomeMessage = "Hello from the alternate version!";
+        Console.WriteLine("SayHello() triggered.");
     }
 
-    private void IncrementCounter()
+    private void DecreaseCounter()
     {
-        counter++;
-        Console.WriteLine($"Counter updated to {counter}");
+        clicks--;
+        Console.WriteLine($"Clicks decreased: {clicks}");
     }
 
-    private void ToggleDetails()
+    private void ToggleExtraInfo()
     {
-        showDetails = !showDetails;
-        Console.WriteLine($"ShowDetails toggled: {showDetails}");
+        showInfo = !showInfo;
+        Console.WriteLine($"ShowInfo toggled: {showInfo}");
     }
 }
