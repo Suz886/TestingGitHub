@@ -2,7 +2,7 @@
 
 <h3>Home</h3>
 
-<p>Welcome!</p>
+<p>Welcome to the <strong>GitHub Merge Test Page</strong>!</p>
 
 <p>@message</p>
 
@@ -25,7 +25,7 @@
 
 @code {
     // Message displayed when the page loads
-    private string message = "Hello from the Home page!";
+    private string message = "Hello from the Home page — merge test version!";
 
     // Message shown when the user clicks the 'Click Me' button
     private string? clickedMessage;
@@ -43,14 +43,14 @@
 
     private void ShowMessage()
     {
-        clickedMessage = "You clicked the button!";
-        Console.WriteLine("Button clicked!");
+        clickedMessage = "You clicked the button during a merge test!";
+        Console.WriteLine("Button clicked — merge test");
     }
 
     private void IncrementCounter()
     {
         counter++;
-        Console.WriteLine($"Counter is now {counter}");
+        Console.WriteLine($"Counter updated to {counter}");
     }
 
     private void ToggleDetails()
