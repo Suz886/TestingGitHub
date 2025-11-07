@@ -1,11 +1,12 @@
 ﻿@page "/"
 
-<h3>Home</h3>
+<h1>🏠 Welcome Home (Second PC Version)</h1>
 
+<p>This version is intentionally different for merge conflict testing.</p>
 <div class="card shadow-sm p-4 mt-3">
     <p>Welcome to the <strong>GitHub Merge Test Page</strong>!</p>
 
-    <p>@message</p>
+<p>@welcomeMessage</p>
 
     <div class="mb-3">
         <label for="nameInput" class="form-label">Enter your name:</label>
@@ -22,11 +23,14 @@
         <button class="btn btn-secondary me-2" @onclick="IncrementCounter">Increase Counter</button>
         <button class="btn btn-outline-info" @onclick="ToggleDetails">Toggle Details</button>
     </div>
+<button class="btn btn-danger me-2" @onclick="SayHello">Say Hello</button>
+<button class="btn btn-warning me-2" @onclick="DecreaseCounter">Decrease Counter</button>
+<button class="btn btn-dark" @onclick="ToggleExtraInfo">Show Extra Info</button>
 
-    @if (!string.IsNullOrEmpty(clickedMessage))
-    {
-        <p class="text-success fw-bold mt-3">@clickedMessage</p>
-    }
+@if (showInfo)
+{
+    <p class="text-success fw-bold mt-2">@clickedMessage</p>
+}
 
     @if (showDetails)
     {
@@ -50,17 +54,8 @@
     // --- Lifecycle methods ---
     protected override void OnInitialized()
     {
-        Console.WriteLine("Home page initialized");
-        message = $"Hello from the Home page! The time is {DateTime.Now.ToShortTimeString()}";
-
-        // Start a timer to update the current time every second
-        timer = new System.Timers.Timer(1000);
-        timer.Elapsed += (s, e) =>
-        {
-            currentTime = DateTime.Now.ToLongTimeString();
-            InvokeAsync(StateHasChanged); // refresh UI safely from background thread
-        };
-        timer.Start();
+        Console.WriteLine("Second PC version initialized!");
+        randomValue = new Random().NextDouble() * 100;
     }
 
     public void Dispose() => timer?.Dispose();
@@ -68,17 +63,17 @@
     // --- Event handlers ---
     private void ShowMessage()
     {
-        clickedMessage = "You clicked the button during a merge test!";
-        Console.WriteLine("Button clicked — merge test");
+        welcomeMessage = "Hello from the alternate version!";
+        Console.WriteLine("SayHello() triggered.");
     }
 
-    private void IncrementCounter()
+    private void DecreaseCounter()
     {
-        counter++;
-        Console.WriteLine($"Counter updated to {counter}");
+        clicks--;
+        Console.WriteLine($"Clicks decreased: {clicks}");
     }
 
-    private void ToggleDetails()
+    private void ToggleExtraInfo()
     {
         showDetails = !showDetails;
         Console.WriteLine($"ShowDetails: {showDetails}");
