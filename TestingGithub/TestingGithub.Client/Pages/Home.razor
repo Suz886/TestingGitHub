@@ -2,45 +2,70 @@
 
 <h3>Home</h3>
 
-<p>Welcome to the <strong>GitHub Merge Test Page</strong>!</p>
+<div class="card shadow-sm p-4 mt-3">
+    <p>Welcome to the <strong>GitHub Merge Test Page</strong>!</p>
 
-<p>@message</p>
+    <p>@message</p>
 
-<button class="btn btn-primary me-2" @onclick="ShowMessage">Click Me</button>
-<button class="btn btn-secondary me-2" @onclick="IncrementCounter">Increase Counter</button>
-<button class="btn btn-outline-info" @onclick="ToggleDetails">Toggle Details</button>
-
-@if (!string.IsNullOrEmpty(clickedMessage))
-{
-    <p class="text-success fw-bold mt-2">@clickedMessage</p>
-}
-
-@if (showDetails)
-{
-    <div class="alert alert-info mt-3">
-        <p>The current time is: <strong>@DateTime.Now.ToLongTimeString()</strong></p>
-        <p>You’ve clicked the counter button <strong>@counter</strong> times.</p>
+    <div class="mb-3">
+        <label for="nameInput" class="form-label">Enter your name:</label>
+        <input id="nameInput" @bind="userName" placeholder="Your name..." class="form-control w-50" />
     </div>
-}
+
+    @if (!string.IsNullOrWhiteSpace(userName))
+    {
+        <p class="fw-semibold">👋 Hello, @userName!</p>
+    }
+
+    <div class="mt-3">
+        <button class="btn btn-primary me-2" @onclick="ShowMessage">Click Me</button>
+        <button class="btn btn-secondary me-2" @onclick="IncrementCounter">Increase Counter</button>
+        <button class="btn btn-outline-info" @onclick="ToggleDetails">Toggle Details</button>
+    </div>
+
+    @if (!string.IsNullOrEmpty(clickedMessage))
+    {
+        <p class="text-success fw-bold mt-3">@clickedMessage</p>
+    }
+
+    @if (showDetails)
+    {
+        <div class="alert alert-info mt-4">
+            <p>⏰ The current time is: <strong>@currentTime</strong></p>
+            <p>🔢 You’ve clicked the counter button <strong>@counter</strong> times.</p>
+        </div>
+    }
+</div>
 
 @code {
-    // Message displayed when the page loads
+    // --- Fields ---
     private string message = "Hello from the Home page — merge test version!";
-
-    // Message shown when the user clicks the 'Click Me' button
     private string? clickedMessage;
-
-    // Counter and toggle state
     private int counter = 0;
     private bool showDetails = false;
+    private string currentTime = DateTime.Now.ToLongTimeString();
+    private string? userName;
+    private System.Timers.Timer? timer;
 
-    // Lifecycle method runs once when the component initializes
+    // --- Lifecycle methods ---
     protected override void OnInitialized()
     {
         Console.WriteLine("Home page initialized");
         message = $"Hello from the Home page! The time is {DateTime.Now.ToShortTimeString()}";
+
+        // Start a timer to update the current time every second
+        timer = new System.Timers.Timer(1000);
+        timer.Elapsed += (s, e) =>
+        {
+            currentTime = DateTime.Now.ToLongTimeString();
+            InvokeAsync(StateHasChanged); // refresh UI safely from background thread
+        };
+        timer.Start();
     }
 
+    public void Dispose() => timer?.Dispose();
+
+    // --- Event handlers ---
     private void ShowMessage()
     {
         clickedMessage = "You clicked the button during a merge test!";
